@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory, IndexRedirect} from 'react-router';
+import {Router, Route, hashHistory, IndexRedirect, IndexRoute} from 'react-router';
 import {Provider} from 'react-redux';
 
 import AlbumsContainer from './containers/AlbumsContainer';
@@ -15,6 +15,7 @@ import App from './components/App';
 import Albums from './components/Albums';
 import Songs from './components/Songs';
 import Stations from './containers/StationsContainer';
+import Station from './containers/StationContainer';
 
 import axios from 'axios';
 import store from './store';
@@ -68,7 +69,10 @@ ReactDOM.render(
         <Route path="/new-playlist" component={NewPlaylistContainer}/>
         <Route path="/playlists/:playlistId" component={PlaylistContainer} onEnter={onPlaylistEnter}/>
         <Route path="/lyrics" component={LyricsContainer} />
-        <Route path="/stations" onEnter={onStationsEnter} component={Stations} />
+        <Route path="/stations" onEnter={onStationsEnter}>
+            <Route path="/stations/:genreName" component={Station} />
+            <IndexRoute component={Stations} />
+        </Route>
         <IndexRedirect to="/albums"/>
       </Route>
     </Router>
