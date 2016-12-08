@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 
 export default function (props) {
 
-  const playlists = props.playlists;
+  const playlists = props.playlists.list;
 
   return (
     <sidebar>

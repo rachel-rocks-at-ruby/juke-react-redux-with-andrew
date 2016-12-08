@@ -16,12 +16,14 @@ import Albums from './components/Albums';
 import Songs from './components/Songs';
 import Stations from './containers/StationsContainer';
 import Station from './containers/StationContainer';
+import AUDIO from './audio';
 
 import axios from 'axios';
 import store from './store';
 import {receiveAlbums, getAlbumById} from './action-creators/albums';
 import {receiveArtists, getArtistById} from './action-creators/artists';
 import {receivePlaylists, getPlaylistById, loadAllSongs} from './action-creators/playlists';
+import {setProgress, next} from './action-creators/player';
 
 const onAppEnter = function () {
 
@@ -37,6 +39,10 @@ const onAppEnter = function () {
       store.dispatch(receivePlaylists(playlists));
     });
 
+  AUDIO.addEventListener('ended', next);
+  AUDIO.addEventListener('timeupdate', () => {
+    store.dispatch(setProgress(AUDIO.currentTime / AUDIO.duration));
+  });
 };
 
 const onAlbumEnter = function (nextRouterState) {
